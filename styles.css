@@ -5,6 +5,7 @@
             --gold-color: #ffd700;        /* Золотой для акцентов */
             --red-color: #ff4757;         /* Красный для кнопок */
             --green-color: #2ed573;       /* Зелёный для акцентов */
+            --blue-color: #3742fa;        /* Синий для категорий */
             --text-light: #f1f2f6;        /* Светлый текст */
             --text-muted: #a4b0be;        /* Приглушённый текст */
         }
@@ -43,7 +44,7 @@
         .container {
             position: relative;
             z-index: 2;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
             display: flex;
@@ -52,10 +53,10 @@
             min-height: 100vh;
         }
 
-        /* ===== ШАПКА ===== */
+        /* ===== ШАПКА И ПОДСКАЗКА ===== */
         .header {
             text-align: center;
-            margin: 40px 0 30px;
+            margin: 30px 0 20px;
             width: 100%;
         }
 
@@ -86,7 +87,108 @@
             color: var(--text-muted);
             font-size: 1.2rem;
             max-width: 600px;
-            margin: 0 auto;
+            margin: 0 auto 25px;
+        }
+
+        /* ===== ПОДСКАЗКА ПО ИСПОЛЬЗОВАНИЮ ===== */
+        .instructions {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0 25px;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .instructions h3 {
+            color: var(--gold-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .instructions h3::before {
+            content: '💡';
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            color: var(--text-light);
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+            padding-left: 5px;
+        }
+
+        /* ===== ВЫБОР КАТЕГОРИИ ===== */
+        .categories-section {
+            width: 100%;
+            margin: 20px 0 30px;
+            text-align: center;
+        }
+
+        .categories-title {
+            color: var(--gold-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .categories-title::before {
+            content: '🎯';
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .category-btn {
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            border-radius: 50px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .category-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .category-btn.active {
+            background: var(--blue-color);
+            border-color: var(--gold-color);
+            box-shadow: 0 0 15px rgba(55, 66, 250, 0.5);
+        }
+
+        .selected-category {
+            margin-top: 15px;
+            color: var(--gold-color);
+            font-weight: 600;
+            min-height: 24px;
+        }
+
+        .selected-category span {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
         }
 
         /* ===== ОТКРЫТКА ===== */
@@ -116,7 +218,7 @@
 
         /* ===== ОБЛАСТЬ ПОЗДРАВЛЕНИЯ ===== */
         .greeting-display {
-            min-height: 200px;
+            min-height: 220px;
             padding: 25px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 15px;
@@ -126,6 +228,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            position: relative;
         }
 
         .greeting-text {
@@ -134,6 +237,7 @@
             color: var(--text-light);
             font-style: italic;
             transition: all 0.3s ease;
+            padding: 0 10px;
         }
 
         /* ===== КНОПКИ ===== */
@@ -270,6 +374,11 @@
                 font-size: 1.4rem;
             }
             
+            .category-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
             .btn {
                 min-width: 100%;
             }
@@ -285,6 +394,10 @@
             .card {
                 padding: 20px;
             }
+            
+            .categories {
+                gap: 8px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -299,6 +412,11 @@
             .btn {
                 padding: 12px 20px;
                 font-size: 1rem;
+            }
+            
+            .category-btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
             }
         }
 
