@@ -1,10 +1,11 @@
-Рабочее сохранение 1
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Новогодняя открытка</title>
+    <title>Персональная новогодняя открытка</title>
+    <!-- Библиотека для скриншотов -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
         /* ===== НОВОГОДНИЕ ПЕРЕМЕННЫЕ ===== */
         :root {
@@ -27,14 +28,51 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-color);
             color: var(--text-light);
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+            transition: background-image 1s ease;
+        }
+
+        /* Фоны по умолчанию */
+        body.bg-default {
+            background: var(--bg-color);
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 20%);
-            position: relative;
+        }
+
+        body.bg-chinese {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        body.bg-tree {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url('https://images.unsplash.com/photo-1544788979-1cda6e1c2f80?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        body.bg-gifts {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url('https://images.unsplash.com/photo-1575919988855-f727358015b7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        body.bg-snow {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                        url('https://images.unsplash.com/photo-1476820865390-c52aeebb9891?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
 
         /* ===== КОНТЕЙНЕР СНЕЖИНОК ===== */
@@ -96,6 +134,90 @@
             font-size: 1.2rem;
             max-width: 600px;
             margin: 0 auto 25px;
+        }
+
+        /* ===== ВЫБОР ФОНА ===== */
+        .background-section {
+            width: 100%;
+            margin: 20px 0 30px;
+            text-align: center;
+        }
+
+        .background-title {
+            color: var(--gold-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .background-title::before {
+            content: '🎨';
+        }
+
+        .background-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .background-btn {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            min-width: 150px;
+        }
+
+        .background-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .background-btn.active {
+            border-color: var(--gold-color);
+            background: rgba(255, 215, 0, 0.1);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .bg-preview {
+            width: 120px;
+            height: 80px;
+            border-radius: 10px;
+            background-size: cover;
+            background-position: center;
+            transition: all 0.3s ease;
+        }
+
+        .bg-preview.default {
+            background: linear-gradient(135deg, #0a192f, #1a2f4b);
+        }
+
+        .bg-preview.chinese {
+            background-image: url('https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');
+        }
+
+        .bg-preview.tree {
+            background-image: url('https://images.unsplash.com/photo-1544788979-1cda6e1c2f80?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');
+        }
+
+        .bg-preview.gifts {
+            background-image: url('https://images.unsplash.com/photo-1575919988855-f727358015b7?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');
+        }
+
+        .bg-preview.snow {
+            background-image: url('https://images.unsplash.com/photo-1476820865390-c52aeebb9891?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80');
         }
 
         /* ===== ПОДСКАЗКА ПО ИСПОЛЬЗОВАНИЮ ===== */
@@ -284,6 +406,12 @@
             box-shadow: 0 5px 15px rgba(46, 213, 115, 0.4);
         }
 
+        .btn-screenshot {
+            background: linear-gradient(135deg, var(--blue-color), #4b7bec);
+            color: white;
+            box-shadow: 0 5px 15px rgba(75, 123, 236, 0.4);
+        }
+
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
@@ -291,6 +419,52 @@
 
         .btn:active {
             transform: translateY(0);
+        }
+
+        /* ===== ПРЕДПРОСМОТР СКРИНШОТА ===== */
+        .screenshot-preview {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            display: none;
+            text-align: center;
+        }
+
+        .screenshot-title {
+            color: var(--gold-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .screenshot-title::before {
+            content: '📸';
+        }
+
+        .screenshot-image {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            border: 3px solid var(--gold-color);
+            margin: 20px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .screenshot-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
         }
 
         /* ===== ПОДЕЛИТЬСЯ ===== */
@@ -367,67 +541,6 @@
             animation: float 3s ease-in-out infinite;
         }
 
-        /* ===== АДАПТИВНОСТЬ ===== */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .header h1::before,
-            .header h1::after {
-                display: none;
-            }
-            
-            .greeting-text {
-                font-size: 1.4rem;
-            }
-            
-            .category-btn {
-                padding: 10px 15px;
-                font-size: 0.9rem;
-            }
-            
-            .btn {
-                min-width: 100%;
-            }
-            
-            .buttons {
-                flex-direction: column;
-            }
-            
-            .share-buttons {
-                flex-direction: column;
-            }
-            
-            .card {
-                padding: 20px;
-            }
-            
-            .categories {
-                gap: 8px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .greeting-text {
-                font-size: 1.2rem;
-            }
-            
-            .btn {
-                padding: 12px 20px;
-                font-size: 1rem;
-            }
-            
-            .category-btn {
-                padding: 8px 12px;
-                font-size: 0.85rem;
-            }
-        }
-
         /* ===== УВЕДОМЛЕНИЕ ===== */
         .notification {
             position: fixed;
@@ -447,9 +560,81 @@
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
+
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header h1::before,
+            .header h1::after {
+                display: none;
+            }
+            
+            .greeting-text {
+                font-size: 1.4rem;
+            }
+            
+            .category-btn, .background-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .bg-preview {
+                width: 100px;
+                height: 70px;
+            }
+            
+            .btn {
+                min-width: 100%;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .categories, .background-options {
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .greeting-text {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .category-btn, .background-btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                min-width: 120px;
+            }
+            
+            .bg-preview {
+                width: 80px;
+                height: 60px;
+            }
+        }
     </style>
 </head>
-<body>
+<body class="bg-default">
     <!-- Контейнер для снежинок -->
     <div id="snowflakes-container"></div>
 
@@ -464,11 +649,39 @@
         <div class="instructions fade-in">
             <h3>Как пользоваться:</h3>
             <ol>
+                <li>Выберите красивый фон для открытки</li>
                 <li>Выберите, кому адресовано поздравление</li>
                 <li>Нажмите "Создать поздравление" для генерации текста</li>
-                <li>Копируйте и делитесь созданной открыткой</li>
+                <li>Сохраните открытку или поделитесь с друзьями</li>
             </ol>
         </div>
+
+        <!-- Выбор фона -->
+        <section class="background-section">
+            <h3 class="background-title">Выберите фон открытки</h3>
+            <div class="background-options">
+                <button class="background-btn active" data-bg="default">
+                    <div class="bg-preview default"></div>
+                    <span>🌟 Стандартный</span>
+                </button>
+                <button class="background-btn" data-bg="chinese">
+                    <div class="bg-preview chinese"></div>
+                    <span>🎎 Китайский Новый Год</span>
+                </button>
+                <button class="background-btn" data-bg="tree">
+                    <div class="bg-preview tree"></div>
+                    <span>🎄 Ёлка с подарками</span>
+                </button>
+                <button class="background-btn" data-bg="gifts">
+                    <div class="bg-preview gifts"></div>
+                    <span>🎁 Новогодние подарки</span>
+                </button>
+                <button class="background-btn" data-bg="snow">
+                    <div class="bg-preview snow"></div>
+                    <span>❄️ Снежный пейзаж</span>
+                </button>
+            </div>
+        </section>
 
         <!-- Выбор категории -->
         <div class="categories-section">
@@ -508,7 +721,7 @@
         </div>
 
         <!-- Основная открытка -->
-        <main class="card fade-in">
+        <main class="card fade-in" id="greeting-card">
             <div class="greeting-display">
                 <div id="greeting-text" class="greeting-text">
                     Выберите категорию и нажмите кнопку для создания поздравления!
@@ -521,6 +734,9 @@
                 </button>
                 <button id="copy-btn" class="btn btn-copy">
                     <span>📋</span> Копировать текст
+                </button>
+                <button id="screenshot-btn" class="btn btn-screenshot">
+                    <span>📸</span> Сделать открытку
                 </button>
             </div>
 
@@ -536,6 +752,18 @@
                 </div>
             </div>
         </main>
+
+        <!-- Предпросмотр скриншота -->
+        <section class="screenshot-preview" id="screenshot-preview">
+            <h3 class="screenshot-title">Ваша открытка готова!</h3>
+            <p>Скачайте изображение или отправьте друзьям</p>
+            <img id="screenshot-image" class="screenshot-image" alt="Предпросмотр открытки">
+            <div class="screenshot-actions">
+                <button id="download-btn" class="btn btn-download">
+                    <span>💾</span> Скачать открытку
+                </button>
+            </div>
+        </section>
 
         <footer class="footer">
             <p>Создано с ❤️ для вас. Счастливого Нового Года! ✨</p>
@@ -608,18 +836,54 @@
             spouse: "Муж/Жена"
         };
 
+        // ===== КАРТА НАЗВАНИЙ ФОНОВ =====
+        const backgroundNames = {
+            default: "Стандартный фон",
+            chinese: "Китайский Новый Год",
+            tree: "Ёлка с подарками",
+            gifts: "Новогодние подарки",
+            snow: "Снежный пейзаж"
+        };
+
         // ===== ЭЛЕМЕНТЫ =====
         const greetingText = document.getElementById('greeting-text');
+        const greetingCard = document.getElementById('greeting-card');
         const generateBtn = document.getElementById('generate-btn');
         const copyBtn = document.getElementById('copy-btn');
+        const screenshotBtn = document.getElementById('screenshot-btn');
+        const downloadBtn = document.getElementById('download-btn');
         const notification = document.getElementById('notification');
         const shareVk = document.getElementById('share-vk');
         const shareTelegram = document.getElementById('share-telegram');
         const categoryButtons = document.querySelectorAll('.category-btn');
+        const backgroundButtons = document.querySelectorAll('.background-btn');
         const selectedCategoryText = document.getElementById('selected-category-text');
+        const screenshotPreview = document.getElementById('screenshot-preview');
+        const screenshotImage = document.getElementById('screenshot-image');
 
         // ===== ПЕРЕМЕННЫЕ СОСТОЯНИЯ =====
         let currentCategory = 'all';
+        let currentBackground = 'default';
+        let currentScreenshot = null;
+
+        // ===== УПРАВЛЕНИЕ ФОНАМИ =====
+        function selectBackground(bgType) {
+            // Снимаем активный класс со всех кнопок фона
+            backgroundButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Добавляем активный класс выбранной кнопке
+            const selectedBtn = document.querySelector(`[data-bg="${bgType}"]`);
+            selectedBtn.classList.add('active');
+            
+            // Меняем фон body
+            document.body.className = `bg-${bgType}`;
+            currentBackground = bgType;
+            
+            // Показываем уведомление
+            showNotification(`Фон изменён: ${backgroundNames[bgType]}`);
+        }
 
         // ===== УПРАВЛЕНИЕ КАТЕГОРИЯМИ =====
         function selectCategory(category) {
@@ -668,6 +932,49 @@
                 // Обновляем ссылки для шаринга
                 updateShareLinks(greeting);
             }, 300);
+        }
+
+        // ===== СИСТЕМА СКРИНШОТОВ =====
+        async function createScreenshot() {
+            try {
+                // Показываем уведомление о начале создания
+                showNotification('🖼️ Создаю открытку...');
+                
+                // Создаем скриншот с высоким качеством
+                const canvas = await html2canvas(greetingCard, {
+                    scale: 2, // Увеличиваем качество в 2 раза
+                    backgroundColor: null, // Прозрачный фон
+                    useCORS: true,
+                    logging: false,
+                    allowTaint: true
+                });
+                
+                // Сохраняем скриншот
+                currentScreenshot = canvas.toDataURL('image/png', 1.0);
+                
+                // Показываем предпросмотр
+                screenshotImage.src = currentScreenshot;
+                screenshotPreview.style.display = 'block';
+                
+                // Прокручиваем к превью
+                screenshotPreview.scrollIntoView({ behavior: 'smooth' });
+                
+                showNotification('✅ Открытка создана! Теперь можно скачать или отправить');
+            } catch (error) {
+                console.error('Ошибка создания скриншота:', error);
+                showNotification('❌ Ошибка при создании открытки. Попробуйте ещё раз.');
+            }
+        }
+
+        function downloadScreenshot() {
+            if (!currentScreenshot) return;
+            
+            const link = document.createElement('a');
+            link.download = `новогодняя-открытка-${Date.now()}.png`;
+            link.href = currentScreenshot;
+            link.click();
+            
+            showNotification('📥 Открытка скачана!');
         }
 
         // ===== КОПИРОВАНИЕ ТЕКСТА =====
@@ -756,12 +1063,22 @@
         // ===== ОБРАБОТЧИКИ СОБЫТИЙ =====
         generateBtn.addEventListener('click', generateGreeting);
         copyBtn.addEventListener('click', copyToClipboard);
+        screenshotBtn.addEventListener('click', createScreenshot);
+        downloadBtn.addEventListener('click', downloadScreenshot);
 
         // Обработчики для кнопок категорий
         categoryButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 const category = btn.dataset.category;
                 selectCategory(category);
+            });
+        });
+
+        // Обработчики для кнопок фона
+        backgroundButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const bg = btn.dataset.bg;
+                selectBackground(bg);
             });
         });
 
@@ -799,7 +1116,7 @@
         // Показ подсказки при первом посещении
         if (!localStorage.getItem('instructionsSeen')) {
             setTimeout(() => {
-                showNotification('💡 Выберите категорию получателя для персонализированного поздравления!');
+                showNotification('🎨 Теперь вы можете выбирать разные фоны для открытки!');
                 localStorage.setItem('instructionsSeen', 'true');
             }, 2000);
         }
