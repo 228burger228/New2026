@@ -75,6 +75,15 @@
             background-attachment: fixed;
         }
 
+
+        body.bg-tank {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                        url('https://avatars.mds.yandex.net/i?id=0c508ce6765bdbd8670d59c73b1e5f3f_l-4429678-images-thumbs&n=13');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
         /* ===== ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ САЙТА ===== */
         /* Гирлянды */
         .garland {
@@ -361,6 +370,10 @@
 
         .bg-preview.snow {
             background-image: url('https://img.freepik.com/free-photo/dreamy-rainbow-countryside_23-2151625056.jpg?semt=ais_hybrid&w=740');
+        }
+
+        .bg-preview.tank {
+            background-image: url('https://eu-wotp.wgcdn.co/dcont/fb/image/advent_calendar_1125x2436.jpg');
         }
 
         /* ===== ПОДСКАЗКА ПО ИСПОЛЬЗОВАНИЮ ===== */
@@ -1036,9 +1049,13 @@
                     <div class="bg-preview snow"></div>
                     <span>❄️ Снежный пейзаж</span>
                 </button>
+                <button class="background-btn" data-bg="tank">
+                    <div class="bg-tank"></div>
+                    <span>❄️ Снежный пейзаж</span>
+                </button>
             </div>
         </section>
-
+ 
         <!-- Выбор категории -->
         <div class="categories-section">
             <h3 class="categories-title">Кому вы хотите поздравить?</h3>
